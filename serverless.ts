@@ -9,9 +9,43 @@ const serverlessConfiguration: Serverless = {
     webpack: {
       webpackConfig: './webpack.config.js',
       includeModules: true
+    },
+    dynamodb: {
+      stages: ['dev', 'local'],
+      start: {
+        port: 8000,
+        inMemory: true,
+        migrate: true,
+      },
+    },
+  },
+  resources: {
+    Resources: {
+      dbCertificateUsers: {
+        Type: 'AWS::DynamoDB::Table',
+        Properties: {
+          TableName: 'users_certificate',
+          ProvisionedThroughput: {
+            ReadCapacityUnits: 5,
+            WriteCapacityUnits: 5
+          },
+          AttributeDefinitions: [
+            {
+              AttributeName: 'id',
+              AttributeType: 'S'
+            }
+          ],
+          KeySchema: [
+            {
+              AttributeName: 'id',
+              KeyType: 'HASH'
+            }
+          ]
+        }
+      }
     }
   },
-  plugins: ['serverless-webpack', 'serverless-offline'],
+  plugins: ['serverless-webpack', 'serverless-dynamodb-local', 'serverless-offline'],
   provider: {
     name: 'aws',
     runtime: 'nodejs12.x',
@@ -23,13 +57,13 @@ const serverlessConfiguration: Serverless = {
     },
   },
   functions: {
-    hello: {
-      handler: 'src/function/hello.handler',
+    generateCertificate: {
+      handler: 'src/function/generateCertificate.handler',
       events: [
         {
           http: {
-            path: 'hello',
-            method: 'get',
+            path: 'generate/certificates',
+            method: 'post',
 
             cors: true
           }
