@@ -48,13 +48,20 @@ const serverlessConfiguration: Serverless = {
   plugins: ['serverless-webpack', 'serverless-dynamodb-local', 'serverless-offline'],
   provider: {
     name: 'aws',
-    runtime: 'nodejs12.x',
+    runtime: 'nodejs14.x',
     apiGateway: {
       minimumCompressionSize: 1024,
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
     },
+    iamRoleStatements: [
+      {
+        Effect: 'Allow',
+        Action: ["dynamodb:*"],
+        Resource: ["*"]
+      }
+    ]
   },
   functions: {
     generateCertificate: {
