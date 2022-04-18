@@ -10,6 +10,17 @@ const serverlessConfiguration: Serverless = {
       webpackConfig: './webpack.config.js',
       includeModules: true
     },
+    esbuild: {
+      bundle: true,
+      minify: false,
+      sourcemap: true,
+      exclude: ["aws-sdk"],
+      target: "node14",
+      define: { "require.resolve": undefined },
+      plataform: "node",
+      concurrency: 10,
+      external: ["chrome-aws-lambda"]
+    },
     dynamodb: {
       stages: ['dev', 'local'],
       start: {
@@ -77,7 +88,8 @@ const serverlessConfiguration: Serverless = {
         }
       ]
     }
-  }
+  },
+  package: { individually: true },
 }
 
 module.exports = serverlessConfiguration;

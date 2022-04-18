@@ -11,11 +11,16 @@
     "deploy": "serverless deploy -v"
   },
   "dependencies": {
+    "chrome-aws-lambda": "^10.1.0",
+    "dayjs": "^1.11.1",
+    "handlebars": "^4.7.7",
+    "puppeteer-core": "^13.5.2",
     "serverless": "^2.7.0",
     "source-map-support": "^0.5.10"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",
+    "@types/handlebars": "^4.1.0",
     "@types/node": "^10.12.18",
     "@types/serverless": "^1.72.5",
     "fork-ts-checker-webpack-plugin": "^3.0.1",

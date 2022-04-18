@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "lib": ["es2017"],
+    "lib": ["ESNext"],
+    "esModuleInterop": true,
     "removeComments": true,
     "moduleResolution": "node",
     "noUnusedLocals": true,
